@@ -20,9 +20,7 @@ Follow these steps to download the existing project locally and then push it to 
 
 Open a terminal and run:
 
-git clone https://github.com/YOUR_USERNAME/backend-assignment.git
-
-(Replace YOUR_USERNAME with the actual GitHub username from where you are downloading the repo.)
+git clone https://github.com/purvangshah2608/backend-assignment.git
 
 Navigate to the project directory:
 
