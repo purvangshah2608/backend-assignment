@@ -1,0 +1,142 @@
+{
+	"info": {
+		"_postman_id": "41e8cce6-d008-40d3-b9c2-be32e8cd5210",
+		"name": "Backend Assignment APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31109455"
+	},
+	"item": [
+		{
+			"name": "GET /auth/login/ → Get Google Auth URL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://backend-assignment-qycp.onrender.com/auth/login/",
+					"protocol": "https",
+					"host": [
+						"backend-assignment-qycp",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"auth",
+						"login",
+						""
+					]
+				},
+				"description": "### Google OAuth - Get Authentication URL\n\n**Method:** GET  \n**Endpoint:** `/auth/login/`  \n**Description:** This endpoint returns the authentication URL for Google OAuth 2.0. The user needs to open this URL in the browser to log in.\n\n#### **Example Response**\n\n``` json\n{\n    \"auth_url\": \"https://accounts.google.com/o/oauth2/auth?...\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "POST /drive/upload/ → Upload File to Google Drive",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ya29.a0AeXRPp7qdNxYgcGHykcuATSbL6-bqT92TunC8zIlTa28FBmEZ4wT1W3U8xcvJEFmAtBsPcqSCeypsGt_PTJfC7N0ImAbfeZ60DWP0Ge9D3ZfenDDeWR8q4e5hvm69UmIP-HjCPuiA46YO82EoCYTRRepMRo7HMA-SeABKaJlaCgYKAYISARMSFQHGX2MiSruHJoU6cLQttJ7Oe6gogA0175",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/purvangshah/Downloads/Jaishil Shah-Java Dveloper-Final Updated Resume 2.pdf"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://backend-assignment-qycp.onrender.com/drive/upload/",
+					"protocol": "https",
+					"host": [
+						"backend-assignment-qycp",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"drive",
+						"upload",
+						""
+					]
+				},
+				"description": "### Google Drive - Upload File\n\n**Method:** POST  \n**Endpoint:** `/drive/upload/`  \n**Description:** This endpoint allows users to upload files to their Google Drive.\n\n#### **Headers**\n\n- `Authorization: Bearer your-google-auth-token`\n    \n\n#### **Request Body**\n\n| Key | Type | Description |\n| --- | --- | --- |\n| file | File | The file to upload |\n\n#### **Example Response**\n\n``` json\n{\n    \"file_id\": \"1Hkf3Nx...\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /drive/files/ → List Files from Google Drive",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ya29.a0AeXRPp7qdNxYgcGHykcuATSbL6-bqT92TunC8zIlTa28FBmEZ4wT1W3U8xcvJEFmAtBsPcqSCeypsGt_PTJfC7N0ImAbfeZ60DWP0Ge9D3ZfenDDeWR8q4e5hvm69UmIP-HjCPuiA46YO82EoCYTRRepMRo7HMA-SeABKaJlaCgYKAYISARMSFQHGX2MiSruHJoU6cLQttJ7Oe6gogA0175",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://backend-assignment-qycp.onrender.com/drive/files/",
+					"protocol": "https",
+					"host": [
+						"backend-assignment-qycp",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"drive",
+						"files",
+						""
+					]
+				},
+				"description": "### Google Drive - List Files\n\n**Method:** GET  \n**Endpoint:** `/drive/files/`  \n**Description:** Retrieves a list of files stored in the authenticated user's Google Drive.\n\n#### **Headers**\n\n| Key | Value |\n| --- | --- |\n| Authorization | Bearer your-google-auth-token |\n\n#### **Example Request**\n\nGET [https://backend-assignment-qycp.onrender.com/drive/files/](https://backend-assignment-qycp.onrender.com/drive/files/)\n\n#### **Example Response**\n\n``` json\n{\n    \"files\": [\n        {\n            \"name\": \"document.pdf\",\n            \"id\": \"1Hkf3Nx...\"\n        },\n        {\n            \"name\": \"photo.jpg\",\n            \"id\": \"2BkE4Nv...\"\n        }\n    ]\n}\n\n ```\n\n#### **Usage**\n\nSend a GET request to /drive/files/ in Postman.\n\nInclude the Authorization header with your Google authentication token.\n\nThe response will return a list of available files."
+			},
+			"response": []
+		},
+		{
+			"name": "GET /drive/download/?file_id=XYZ → Download File from Google Drive",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ya29.a0AeXRPp7qdNxYgcGHykcuATSbL6-bqT92TunC8zIlTa28FBmEZ4wT1W3U8xcvJEFmAtBsPcqSCeypsGt_PTJfC7N0ImAbfeZ60DWP0Ge9D3ZfenDDeWR8q4e5hvm69UmIP-HjCPuiA46YO82EoCYTRRepMRo7HMA-SeABKaJlaCgYKAYISARMSFQHGX2MiSruHJoU6cLQttJ7Oe6gogA0175",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://backend-assignment-qycp.onrender.com/drive/download/?file_id=16D7QJUKtXhPQIEM_ylWB7RBEPZEjCApm",
+					"protocol": "https",
+					"host": [
+						"backend-assignment-qycp",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"drive",
+						"download",
+						""
+					],
+					"query": [
+						{
+							"key": "file_id",
+							"value": "16D7QJUKtXhPQIEM_ylWB7RBEPZEjCApm"
+						}
+					]
+				},
+				"description": "### Google Drive - Download File\n\n**Method:** GET  \n**Endpoint:** `/drive/download/?file_id=YOUR_FILE_ID`  \n**Description:** Downloads a file from Google Drive using the file ID.\n\n#### **Headers**\n\n| Key | Value |\n| --- | --- |\n| Authorization | Bearer your-google-auth-token |\n\n#### **Request Parameters**\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| file_id | String | The unique ID of the file to download. |\n\n#### **Example Request**\n\nGET [https://backend-assignment-qycp.onrender.com/drive/download/?file_id=1Hkf3Nx](https://backend-assignment-qycp.onrender.com/drive/download/?file_id=1Hkf3Nx)...\n\n#### **Example Response**\n\n- The response will return the file for download.\n    \n- If the file is an image or document, it may open directly in the browser.\n    \n- If the file is a ZIP or other type, it will be downloaded.\n    \n\n#### **Usage**\n\n- First, use the **\"List Files\"** API to retrieve available file IDs.\n    \n- Copy the `file_id` from the response.\n    \n- Replace `YOUR_FILE_ID` in the request URL.\n    \n- Send a **GET** request in Postman.\n    \n- The file will be downloaded."
+			},
+			"response": []
+		}
+	]
+}
