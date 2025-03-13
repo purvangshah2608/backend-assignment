@@ -8,7 +8,7 @@ Google OAuth 2.0 Authentication
 
 Google Drive Integration (Upload, List, Download Files)
 
-WebSocket for Real-Time Chat (Tested using wscat)
+WebSocket for Real-Time Chat (Tested using wscat, supports raw text messages)
 
 🚀 Live API URL: https://backend-assignment-qycp.onrender.com/
 
@@ -18,23 +18,16 @@ Follow these steps to download the existing project locally and then push it to 
 
 🔹 Step 1: Download the Project Locally
 
-Open a terminal and run:
-
 git clone https://github.com/purvangshah2608/backend-assignment.git
-
-Navigate to the project directory:
-
 cd backend-assignment
 
 🔹 Step 2: Replace client_secret.json with Your Own Credentials
 
-IMPORTANT: The project you cloned contains my client_secret.json, which will NOT work if you are deploying your own version. You must replace it with your own credentials.
-
-Delete the existing client_secret.json from your cloned project:
+IMPORTANT: The project contains my client_secret.json, which will NOT work on your own hosted version.You must replace it with your own credentials (instructions in the next section).
 
 rm client_secret.json
 
-Follow the instructions below to generate your own client_secret.json.
+Follow the instructions below to generate your own Google OAuth client_secret.json.
 
 Move your newly downloaded client_secret.json into the project directory.
 
@@ -42,9 +35,9 @@ Move your newly downloaded client_secret.json into the project directory.
 
 Create a new GitHub repository:
 
-Go to GitHub
+Go to GitHub.
 
-Click New Repository.
+Click "New Repository".
 
 Name it backend-assignment.
 
@@ -57,29 +50,6 @@ git remote add origin https://github.com/YOUR_GITHUB_USERNAME/backend-assignment
 git branch -M main
 git push -u origin main
 
-🚨 Handling GitHub Push Errors (Secret Scanning Blocks)
-
-When pushing the project to GitHub, you may encounter an error similar to this:
-
-remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.
-remote:        https://github.com/YOUR_GITHUB_USERNAME/backend-assignment/security/secret-scanning/unblock-secret/2uD4bg0RxyZPgnEJdpv8BbTrwaJ
-remote:     
-remote:       —— Google OAuth Client Secret ————————————————————————
-
-🔹 Fix: Allow the Push for Testing Purposes
-
-Copy the URL from the error message (e.g. https://github.com/YOUR_GITHUB_USERNAME/backend-assignment/security/secret-scanning/unblock-secret/...).
-
-Paste the URL in your browser and open it.
-
-Select "Used for test" and confirm to bypass GitHub’s secret scanning.
-
-Retry pushing the code:
-
-git push origin main
-
-🚀 Now, your project is successfully pushed to your own GitHub repository!
-
 3️⃣ How to Set Up Google OAuth 2.0 and Google Drive API
 
 Since this project uses Google OAuth 2.0 and Google Drive API, you need to set up your own credentials before deploying it.
@@ -88,17 +58,17 @@ Since this project uses Google OAuth 2.0 and Google Drive API, you need to set u
 
 Go to Google Cloud Console.
 
-Click Select a project → New Project.
+Click "Select a project" → "New Project".
 
-Name your project (e.g., backend-assignment) and click Create.
+Name your project (e.g., backend-assignment) and click "Create".
 
 🔹 Step 2: Enable OAuth 2.0 & Google Drive API
 
-In Google Cloud Console, select your project.
+Select your project in Google Cloud Console.
 
 Go to APIs & Services → Enabled APIs & Services.
 
-Click Enable APIs & Services and search for:
+Click "Enable APIs & Services" and search for:
 
 OAuth 2.0 API → Click Enable
 
@@ -106,29 +76,24 @@ Google Drive API → Click Enable
 
 🔹 Step 3: Create OAuth 2.0 Credentials
 
-In Google Cloud Console, go to APIs & Services → Credentials.
+Go to APIs & Services → Credentials.
 
-Click Create Credentials → OAuth client ID.
+Click "Create Credentials" → "OAuth client ID".
 
-Select Application Type → Web Application.
+Select Application Type: Web Application.
 
 Under Authorized Redirect URIs, add:
 
 https://backend-assignment-qycp.onrender.com/auth/callback/
 
-Click Create and download the client_secret.json file.
+Click "Create" and download the client_secret.json file.
 
 🔹 Step 4: Replace client_secret.json in Your Project
 
-IMPORTANT: If you do not replace this file, authentication will not work on your own hosted deployment.
-
-Delete the existing client_secret.json from the cloned project:
-
 rm client_secret.json
+mv /path/to/downloaded/client_secret.json .
 
-Move your newly downloaded client_secret.json into the project directory.
-
-Commit and push the updated file to your GitHub repository:
+Then commit and push the updated file:
 
 git add client_secret.json
 git commit -m "Replaced client_secret.json with my own credentials"
@@ -136,7 +101,7 @@ git push origin main
 
 4️⃣ How to Deploy and Run on Render
 
-Follow the instructions to deploy the API on Render.
+This application is hosted on Render. Follow these steps to deploy it.
 
 🔹 Step 1: Deploy on Render
 
@@ -158,15 +123,11 @@ daphne -b 0.0.0.0 -p $PORT backend_assignment.asgi:application
 
 🔹 Step 3: Set Environment Variables
 
-Go to Render → Settings → Environment Variables.
-
-Add the following key-value pairs:
+Go to Render → Settings → Environment Variables, then add:
 
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 GOOGLE_REDIRECT_URI=https://backend-assignment-qycp.onrender.com/auth/callback/
-DEBUG=False
-DJANGO_ALLOWED_HOSTS=backend-assignment-qycp.onrender.com
 
 🔹 Step 4: Deploy the Application
 
@@ -174,16 +135,78 @@ Click "Deploy Web Service".
 
 Wait for Render to build and deploy the application.
 
-After deployment is successful, visit your Render URL:
+Visit your Render URL:
 
 https://backend-assignment-qycp.onrender.com/
 
 🎉 Your Django application is now live!
 
-5️⃣ Postman Collection
+5️⃣ How to Test Each API Endpoint
 
-📌 Download the Postman Collection: https://github.com/purvangshah2608/backend-assignment/blob/main/Backend%20Assignment%20APIs.postman_collection.json
+All API endpoints can be tested using Postman.
+
+📌 Download the Postman Collection:👉 Backend Assignment APIs.postman_collection.json
+
+✅ Google OAuth Endpoints
+
+Get Google Auth URL
+
+Method: GET
+
+URL:
+
+https://backend-assignment-qycp.onrender.com/auth/login/
+
+✅ Google Drive Endpoints
+
+Upload a File
+
+Method: POST
+
+Headers: Authorization: Bearer your-google-auth-token
+
+Body: file (form-data)
+
+URL:
+
+https://backend-assignment-qycp.onrender.com/drive/upload/
+
+List Files
+
+Method: GET
+
+Headers: Authorization: Bearer your-google-auth-token
+
+URL:
+
+https://backend-assignment-qycp.onrender.com/drive/files/
+
+Download a File
+
+Method: GET
+
+Headers: Authorization: Bearer your-google-auth-token
+
+URL:
+
+https://backend-assignment-qycp.onrender.com/drive/download/?file_id=YOUR_FILE_ID
+
+✅ WebSocket Real-Time Chat (Using Raw Text)
+
+Install wscat:
+
+npm install -g wscat
+
+Open two terminals and connect:
+
+wscat -c wss://backend-assignment-qycp.onrender.com/ws/chat/
+
+Send a raw text message:
+
+Hello, how are you?
+
+Receive the message in the other terminal instantly.
 
 6️⃣ Video Demo
 
-🎥 Watch the full walkthrough: YouTube Link
+🎥 Watch the full walkthrough:👉 https://youtu.be/vmJ-FJk3CLU
